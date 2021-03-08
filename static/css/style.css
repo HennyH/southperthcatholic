@@ -53,15 +53,15 @@ body {
 }
 
 @media screen and (min-width: 1080px) {
-  nav > input {
+  nav.navbar--dropdown-item > input {
     display: none;
   }
 
-  nav > label {
+  nav.navbar--dropdown-item > label {
     display: none;
   }
 
-  nav > input + label ~ .navbar--items {
+  nav.navbar--dropdown-item > input + label ~ .navbar--items {
     display: flex !important;
     flex-direction: row;
     justify-content: space-around;
