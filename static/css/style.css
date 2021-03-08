@@ -1,0 +1,215 @@
+/* variables */
+
+:root {
+  --primary-header-color: #900;
+  --primary-button-color: #ccc;
+  --active-button-color: #906;
+  --button-text-color: #009;
+}
+
+/* global layout */
+
+body {
+  background-image: url("/static/images/background.jpg");
+  background-repeat: repeat;
+  font-size: 1.15rem;
+}
+
+@media screen and (min-width: 1000px) {
+  body {
+    width: 975px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+h1 {
+  text-align: center;
+}
+
+h1,
+h2 {
+  color: var(--primary-header-color);
+}
+
+#banner {
+  position: relative;
+}
+
+#banner p {
+  position: absolute;
+  top: 130px;
+  left: 257px;
+  font-size: 1rem;
+}
+
+/* gallery */
+
+.gallery {
+  display: grid;
+  gap: 5em;
+  list-style: none;
+  grid-template-columns: 1fr 35% 35% 1fr;
+  grid-template-areas: ". photo1 photo2 .";
+  grid-auto-rows: max-content;
+}
+
+.gallery > li {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  grid-column: photo1;
+}
+
+.gallery > li:nth-child(2n) {
+  grid-column: photo2;
+}
+
+.gallery img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* mass timetable */
+
+section.mass-timetable h1 {
+  font-size: 1.2em;
+  justify-self: center;
+}
+
+section.mass-timetable #daily-mass-times li strong {
+  /* this is the longest day's number of characters, and hence
+     * all the days will align with sufficent room for the longest
+     * day label.
+     */
+  width: 9ch;
+  padding-right: 1em;
+}
+
+section.mass-timetable #event-times li strong,
+section.mass-timetable #contact-details li strong {
+  color: var(--primary-header-color);
+}
+
+/* contact details */
+
+section.contact-details h1 {
+  font-size: 1.2em;
+  justify-self: center;
+}
+
+section.contact-details li strong {
+  color: var(--primary-header-color);
+  width: auto;
+}
+
+/* Tabular list helper */
+
+.table-list {
+  list-style: none;
+}
+
+.table-list li:not(:first-child) {
+  padding-top: 0.2em;
+}
+
+.table-list li strong {
+  display: block;
+}
+
+.table-list li strong::after {
+  content: ":";
+}
+
+.table-list {
+  padding-left: 0px;
+}
+
+@media screen and (min-width: 700px) {
+  .table-list li strong {
+    display: inline-block;
+  }
+}
+
+/* Navbar */
+
+.nav {
+  --nav-element-width: 15ch;
+  --nav-element-height: 1.6em;
+  --nav-spacer: 0.5em;
+  color: var(--button-text-color);
+  font-size: 1.2rem;
+  padding: 1em;
+}
+
+.nav > ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.nav > ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--nav-spacer);
+}
+
+.nav-item {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: var(--nav-element-height);
+  width: var(--nav-element-width);
+  background-color: var(--primary-button-color);
+}
+
+.nav-submenu {
+  --hover-margin: 1em;
+  width: 100%;
+  display: none;
+  position: absolute;
+  padding: calc(0.5 * var(--nav-spacer)) var(--hover-margin) var(--hover-margin)
+    var(--hover-margin);
+  transform: translateX(calc(-1 * var(--hover-margin)));
+  margin-top: var(--nav-element-height);
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+
+.nav-submenu li {
+  width: auto;
+  padding: 0 var(--nav-spacer);
+}
+
+.nav-item:hover > .nav-submenu,
+.nav-item > input[type="checkbox"]:checked ~ .nav-submenu {
+  display: initial;
+}
+
+.nav-item > label > i.nav-arrow::after {
+  margin-left: 0.4em;
+  content: "↓";
+  color: black;
+  text-decoration: none;
+  font-style: normal;
+}
+
+.nav-item:hover > label > i.nav-arrow::after,
+.nav-item > input[type="checkbox"]:checked + label > i.nav-arrow::after {
+  content: "↑";
+}
+
+.nav-item input[type="checkbox"] {
+  display: none;
+}
+
+.nav-icon {
+  padding-left: 1ch;
+}

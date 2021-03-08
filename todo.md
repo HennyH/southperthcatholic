@@ -1,0 +1,4 @@
+- favicon
+- base template
+- static pages
+- youtube embedd
