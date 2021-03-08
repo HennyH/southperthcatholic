@@ -21,6 +21,12 @@ body {
   margin: 0.5em;
 }
 
+.navbar--dropdown-item  > label {
+  display: inline-block;
+  width: 100%;
+  cursor: pointer;
+}
+
 .navbar--dropdown-item > input:not(:checked) ~ .navbar--items  {
     display: none;
 }
