@@ -67,4 +67,4 @@ def favicon():
 
 
 if __name__ == "__main__":
-    run(host="localhost", port=5000)
+    run(host="localhost", port=5000, debug=True)
