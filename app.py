@@ -37,19 +37,33 @@ def upload_bulletin():
 def admin_bulletin():
     pass
 
+
 @route("/", method="GET")
 @route("/home", method="GET")
 @view("home")
 def home_page():
     pass
 
+
+@route("/mass-times", method="GET")
+@view("mass-times")
+def mass_times():
+    pass
+
+
+@route("/contact-details", method="GET")
+@view("contact-details")
+def contact_details():
+    pass
+
+
 @route("/bulletin", method="GET")
 def get_bulletin():
     if not os.path.exists(BULLETIN_DIRECTORY):
-        abort(404, "No bulletin")
+        abort(404, "No bulletin uploaded")
     bulletins = list(os.scandir(BULLETIN_DIRECTORY))
     if not bulletins:
-        abort(404, "No bulletin")
+        abort(404, "No bulletin uploaded")
     bulletins_ordered_by_date = \
         sorted(bulletins, key=lambda de: de.stat().st_mtime, reverse=True)
     return static_file(filename=bulletins_ordered_by_date[0].name,

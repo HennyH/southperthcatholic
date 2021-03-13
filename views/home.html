@@ -1,3 +1,18 @@
 % rebase("index.html")
-% include("banner.html")
-<h1>Normal mass times have been restored.</h1>
+% include("fragments/banner.html")
+% include("fragments/alerts.html")
+
+<div id="video" style="display: flex; justify-content: center">
+    <iframe id="latest-video" width="600" height="340" frameborder="0" allowfullscreen src="https://youtube.com/embed/x5dHtz6UE4k?controls=0"></iframe>
+</div>
+
+% include("fragments/mass-times.html")
+% include("fragments/contact-details.html")
+
+<script type="text/javascript">
+    $(document).ready(() => {
+        const videoIframe = document.getElementById("latest-video");
+        const channelId = "UCqIV-Kf1UAhhui_zedDtr6A";
+        window.initYoutubeEmbed(videoIframe, channelId);
+    });
+</script>

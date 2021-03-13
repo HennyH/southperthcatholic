@@ -19,7 +19,35 @@ h1 {
   color: var(--primary-header-color);
 }
 
-/* Banner */
+section > h1 {
+  font-size: 1.2em;
+  text-align: center;
+}
+
+section > ol {
+  list-style: none;
+}
+
+/* mass timetable */
+
+section.mass-timetable > ol#daily-mass-times > li > strong {
+  width: 15ch;
+  display: inline-block;
+}
+
+section.mass-timetable > ol:not(#daily-mass-times) > li > strong {
+  color: var(--primary-header-color);
+  padding-right: 1em;
+}
+
+/* contact details */
+
+.contact-details li strong {
+  color: var(--primary-header-color);
+  width: auto;
+}
+
+/* banner */
 
 #banner {
   display: grid;
@@ -84,7 +112,7 @@ h1 {
   }
 }
 
-/* Navbar */
+/* navbar */
 
 .navbar--item > label {
   cursor: pointer;
