@@ -15,6 +15,66 @@ body {
   font-size: 1.15rem;
 }
 
+/* Banner */
+
+#banner {
+  display: grid;
+  justify-items: center;
+  align-items: center
+}
+
+
+#banner > h1, #banner > h2, #banner > h3 {
+  margin: 0.2em 0;
+}
+
+#banner--rose-window {
+  display: none;
+}
+
+#banner--church {
+  display: none;
+}
+
+#banner > ol {
+  list-style: none;
+}
+
+@media screen and (min-width: 780px) {
+  #banner {
+    grid-template-columns: 1fr max-content 1fr;
+    grid-template-areas: "img1 h1 img2" "img1 h2 img2" "img1 h3 img2" "img1 ol img2";
+    justify-items: center;
+    align-items: center;
+  }
+  
+  #banner > h1 {
+    grid-area: h1;
+  }
+  
+  #banner > h2 {
+    grid-area: h2;
+  }
+  
+  #banner > h3 {
+    grid-area: h3;
+  }
+  
+  #banner > ol {
+    grid-area: ol;
+  }
+  
+  #banner--rose-window {
+    display: initial;
+    grid-area: img1;
+  }
+  
+  #banner--church {
+    display: initial;
+    grid-area: img2;
+  }
+}
+
 /* Navbar */
 
 .navbar {

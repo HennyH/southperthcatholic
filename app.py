@@ -37,6 +37,11 @@ def upload_bulletin():
 def admin_bulletin():
     pass
 
+@route("/", method="GET")
+@route("/home", method="GET")
+@view("home")
+def home_page():
+    pass
 
 @route("/bulletin", method="GET")
 def get_bulletin():
