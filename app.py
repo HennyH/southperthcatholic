@@ -7,6 +7,7 @@ from base64 import b64encode
 
 BULLETIN_DIRECTORY = "bulletins"
 ADMIN_SALT = "SaltySalt"
+GALLERY_NAMES = ["photos", "saints", "solemnities"]
 ADMIN_PW_HASH = b"EKrgK7N6azoq50pdu+fc3q2RG4wZXHKkI0QAF7ij7dewyC0VIYZd6g7ctqeiK9eoCULf1tGSsv2b5On/vecUng=="
 
 
@@ -67,7 +68,21 @@ def get_bulletin():
     bulletins_ordered_by_date = \
         sorted(bulletins, key=lambda de: de.stat().st_mtime, reverse=True)
     return static_file(filename=bulletins_ordered_by_date[0].name,
-                       root=BULLETIN_DIRECTORY)
+                       root=BULLETIN_DIRECTORY,
+                       download=True)
+
+
+@route("/gallery/<gallery_name>", method="GET")
+@view("gallery.html")
+def gallery(gallery_name):
+    if gallery_name not in GALLERY_NAMES:
+        abort(404, "No such gallery")
+    return {
+        "images": [
+            [f"/static/images/{gallery_name}/{img.name}", None, None]
+            for img in os.scandir(f"static/images/{gallery_name}")
+        ]
+    }
 
 
 @route("/static/<path:path>")
