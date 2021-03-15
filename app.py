@@ -112,12 +112,17 @@ def main(argv=None):
     result = parser.parse_args(argv)
 
     app = default_app()
+    app.config["port"] = result.port
+    app.config["host"] = result.host
+    app.config["debug"] = result.debug
     app.config["bulletin_directory"] = result.bulletin_directory
     app.config["admin_salt"] = result.admin_salt
     app.config["admin_password_hash"] = hash_password(result.admin_password,
                                                       salt=result.admin_salt)
-    run(app=app, host=result.host, port=result.port, debug=result.debug)
+    return app
 
 
 if __name__ == "__main__":
-    main()
+    app = main()
+    run(app=app, host=app.config["host"],
+        port=app.config["port"], debug=app.config["debug"])
