@@ -90,9 +90,10 @@ def gallery(gallery_name):
     }
 
 
-@route("/static/<path:path>")
-def static(path):
-    return static_file(path, root="static")
+@route("/static/<resource_type:re:css|docs|images|js>/<path:path>")
+def static(resource_type, path):
+    is_download = resource_type == "docs"
+    return static_file(path, root=f"static/{resource_type}", download=is_download)
 
 
 @route("/favicon.ico")
@@ -105,7 +106,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument("--bulletin-directory", type=str, default="bulletins")
     parser.add_argument("--admin-salt", type=str, default="SaltySalt")
-    parser.add_argument("--admin-password", type=str, required=True)
+    parser.add_argument("--admin-password", type=str, default="test")
     parser.add_argument("--port", type=int, default=5000)
     parser.add_argument("--host", type=str, default="0.0.0.0")
     parser.add_argument("--debug", action="store_true")
