@@ -1,18 +1,17 @@
 import os
+import sys
+import argparse
 from operator import itemgetter
 from bottle import route, run, request, template, response, static_file, \
-    abort, view
+    abort, view, default_app
 from hashlib import sha512
 from base64 import b64encode
 
-BULLETIN_DIRECTORY = "bulletins"
-ADMIN_SALT = "SaltySalt"
 GALLERY_NAMES = ["photos", "saints", "solemnities"]
-ADMIN_PW_HASH = b"EKrgK7N6azoq50pdu+fc3q2RG4wZXHKkI0QAF7ij7dewyC0VIYZd6g7ctqeiK9eoCULf1tGSsv2b5On/vecUng=="
 
 
-def hash_password(plain_text):
-    salted_plain_text = f"{plain_text}+{ADMIN_SALT}"
+def hash_password(plain_text, salt):
+    salted_plain_text = f"{plain_text}+{salt}"
     salted_bytes = salted_plain_text.encode("utf-8")
     salted_hash = sha512()
     salted_hash.update(salted_bytes)
@@ -23,13 +22,18 @@ def hash_password(plain_text):
 @route("/bulletin", method="POST")
 def upload_bulletin():
     if "password" not in request.forms or \
-            hash_password(request.forms.password) != ADMIN_PW_HASH:
+        hash_password(request.forms.password,
+                      request.app.config["admin_salt"]) != \
+            request.app.config["admin_password_hash"]:
         abort(400, "Password mismatch")
     if "bulletin" not in request.files or \
             not (bulletin := request.files.bulletin).filename:
         abort(400, "No file")
-    os.makedirs(BULLETIN_DIRECTORY, exist_ok=True)
-    bulletin.save(os.path.join(BULLETIN_DIRECTORY, bulletin.filename),
+    bulletin_directory = request.app.config["bulletin_directory"]
+    if not bulletin_directory:
+        abort(503, "Upload could not be accepted")
+    os.makedirs(bulletin_directory, exist_ok=True)
+    bulletin.save(os.path.join(bulletin_directory, bulletin.filename),
                   overwrite=True)
 
 
@@ -60,15 +64,16 @@ def contact_details():
 
 @route("/bulletin", method="GET")
 def get_bulletin():
-    if not os.path.exists(BULLETIN_DIRECTORY):
+    bulletin_directory = request.app.config["bulletin_directory"]
+    if not bulletin_directory or not os.path.exists(bulletin_directory):
         abort(404, "No bulletin uploaded")
-    bulletins = list(os.scandir(BULLETIN_DIRECTORY))
+    bulletins = list(os.scandir(bulletin_directory))
     if not bulletins:
         abort(404, "No bulletin uploaded")
     bulletins_ordered_by_date = \
         sorted(bulletins, key=lambda de: de.stat().st_mtime, reverse=True)
     return static_file(filename=bulletins_ordered_by_date[0].name,
-                       root=BULLETIN_DIRECTORY,
+                       root=bulletin_directory,
                        download=True)
 
 
@@ -95,5 +100,24 @@ def favicon():
     return static_file("images/favicon.ico", root="static")
 
 
+def main(argv=None):
+    argv = argv or sys.argv[1:]
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--bulletin-directory", type=str, default="bulletins")
+    parser.add_argument("--admin-salt", type=str, default="SaltySalt")
+    parser.add_argument("--admin-password", type=str, required=True)
+    parser.add_argument("--port", type=int, default=5000)
+    parser.add_argument("--host", type=str, default="0.0.0.0")
+    parser.add_argument("--debug", action="store_true")
+    result = parser.parse_args(argv)
+
+    app = default_app()
+    app.config["bulletin_directory"] = result.bulletin_directory
+    app.config["admin_salt"] = result.admin_salt
+    app.config["admin_password_hash"] = hash_password(result.admin_password,
+                                                      salt=result.admin_salt)
+    run(app=app, host=result.host, port=result.port, debug=result.debug)
+
+
 if __name__ == "__main__":
-    run(host="localhost", port=5000, debug=True)
+    main()
