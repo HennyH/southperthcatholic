@@ -62,6 +62,12 @@ def contact_details():
     pass
 
 
+@route("/holy-week", method="GET")
+@view("holy-week")
+def holy_week():
+    pass
+
+
 @route("/bulletin", method="GET")
 def get_bulletin():
     bulletin_directory = request.app.config["bulletin_directory"]
