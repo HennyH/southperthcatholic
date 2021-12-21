@@ -9,6 +9,10 @@
 
 /* global layout */
 
+#notices li {
+  margin-top: 1em;
+}
+
 body {
   background-image: url("/static/images/background.jpg");
   background-repeat: repeat;
