@@ -9,8 +9,30 @@
 
 /* global layout */
 
+#notices h1 {
+  font-size: 1.4em;
+}
+
 #notices li {
-  margin-top: 1em;
+  list-style: none;
+  border-bottom: 1px solid lightgray;
+}
+
+#notices h2, #notices h3 {
+  text-align: center;
+}
+
+#notices h2 {
+  font-size: 1.1em;
+  color: var(--primary-header-color);
+}
+
+#notices h3 {
+  font-size: 1em;
+}
+
+#notices p {
+  text-align: center;
 }
 
 body {
