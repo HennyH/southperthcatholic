@@ -1,0 +1,21 @@
+---
+layout: "base.njk"
+pagination:
+    data: galleries
+    size: 1
+    alias: gallery
+permalink: "/gallery/{{ gallery | slug }}/"
+galleries:
+    - photos
+    - saints
+    - solemnities
+---
+
+<section class="gallery">
+    {% set images = photos[gallery] %}
+    {% for url in images %}
+        <figure>
+            <img src="/{{url}}" />
+        </figure>
+    {% endfor %}
+</section>

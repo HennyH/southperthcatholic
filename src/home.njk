@@ -1,0 +1,28 @@
+---
+layout: "base.njk"
+permalink: "/"
+---
+
+{% include "./fragments/alerts.njk" %}
+
+<div id="video" style="display: flex; justify-content: center">
+  <iframe
+    id="latest-video"
+    width="600"
+    height="340"
+    frameborder="0"
+    allowfullscreen
+    src="https://youtube.com/embed/x5dHtz6UE4k?controls=0"
+  ></iframe>
+</div>
+
+{% include "./fragments/mass-times.njk" %}
+{% include "./fragments/contact-details.njk" %}
+
+<script type="text/javascript">
+  $(document).ready(() => {
+    const videoIframe = document.getElementById("latest-video");
+    const channelId = "UCqIV-Kf1UAhhui_zedDtr6A";
+    window.initYoutubeEmbed(videoIframe, channelId);
+  });
+</script>
