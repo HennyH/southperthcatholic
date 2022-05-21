@@ -36,7 +36,7 @@
   }
   
   body {
-    background-image: url("/static/images/background.jpg");
+    background-image: url("/assets/images/background.jpg");
     background-repeat: repeat;
     font-size: 1.15rem;
   }
