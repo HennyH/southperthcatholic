@@ -230,3 +230,14 @@ nav.navbar > .navbar--items {
 .gallery > figure > img {
   max-width: 100%;
 }
+
+th,
+td {
+  border: 1px solid black;
+  text-align: left;
+  padding: 0.1em;
+}
+
+tr.alt {
+  background-color: lightgray;
+}
