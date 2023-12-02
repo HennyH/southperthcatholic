@@ -66,9 +66,10 @@ section.mass-timetable > ol#daily-mass-times > li > strong {
   display: inline-block;
 }
 
-section.mass-timetable > ol:not(#daily-mass-times) > li > strong {
-  width: 39ch;
-  display: inline-block;
+#event-times {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 1em;
 }
 
 #contact-details strong,
